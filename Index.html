@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Singapore Mahjong — Quick Reminder (Offline)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --card:#111b2e;
+      --card2:#0f1729;
+      --ink:#eaf0ff;
+      --muted:#b9c4e6;
+      --line:rgba(255,255,255,.10);
+      --good:#2ee59d;
+      --warn:#ffd166;
+      --bad:#ff5c7a;
+      --accent:#7aa7ff;
+      --accent2:#9cffef;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --r:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(122,167,255,.18), transparent 60%),
+                  radial-gradient(1000px 700px at 90% 30%, rgba(156,255,239,.12), transparent 55%),
+                  linear-gradient(180deg, #070c16, var(--bg));
+      color:var(--ink);
+    }
+    header{
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(7,12,22,.68);
+      border-bottom: 1px solid var(--line);
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 28px}
+    .top{
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(122,167,255,.95), rgba(156,255,239,.85));
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      color:#06101e; font-weight:900;
+    }
+    h1{font-size:18px;margin:0}
+    .sub{color:var(--muted);font-size:12px;margin-top:2px}
+    .btns{display:flex;gap:10px;flex-wrap:wrap}
+    button, .chip{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--ink);
+      padding:10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      font-weight:650;
+    }
+    button:active{transform: translateY(1px) scale(.99)}
+    button.primary{
+      background: linear-gradient(135deg, rgba(122,167,255,.45), rgba(156,255,239,.18));
+      border-color: rgba(122,167,255,.35);
+    }
+    button.danger{border-color: rgba(255,92,122,.35)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      margin-top:14px;
+    }
+    @media (max-width: 880px){
+      .grid{grid-template-columns: 1fr}
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0; font-size:15px;
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .content{padding:12px 14px 14px}
+    .pill{
+      font-size:12px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .k{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size:12px;
+      background: rgba(0,0,0,.15);
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .note{
+      border-left: 3px solid rgba(122,167,255,.55);
+      background: rgba(122,167,255,.08);
+      padding:10px 12px;border-radius: 12px;
+      color: var(--muted);
+      font-size:13px;
+    }
+    .warn{
+      border-left-color: rgba(255,209,102,.7);
+      background: rgba(255,209,102,.08);
+    }
+    .good{
+      border-left-color: rgba(46,229,157,.7);
+      background: rgba(46,229,157,.07);
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(0,0,0,.12);
+      overflow:hidden;
+    }
+    details + details{margin-top:10px}
+    summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      font-weight:750;
+    }
+    summary::-webkit-details-marker{display:none}
+    .small{font-size:12px;color:var(--muted);font-weight:600}
+    .pad{padding:0 12px 12px}
+    ol, ul{margin:8px 0 0 18px;color:var(--muted)}
+    li{margin:6px 0}
+    .step{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px; border:1px dashed rgba(255,255,255,.12);
+      border-radius: 14px; background: rgba(255,255,255,.03);
+      margin-top:10px;
+    }
+    .bubble{
+      width:28px;height:28px;border-radius:10px;
+      background: rgba(156,255,239,.16);
+      border:1px solid rgba(156,255,239,.28);
+      display:grid;place-items:center;
+      font-weight:900;
+      color: var(--accent2);
+      flex: 0 0 auto;
+    }
+    .step b{color:var(--ink)}
+    .muted{color:var(--muted)}
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.10);
+      margin-top:10px;
+    }
+    .table th, .table td{
+      text-align:left;
+      padding:10px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      vertical-align:top;
+      font-size:13px;
+    }
+    .table th{color:var(--ink);font-size:12px;letter-spacing:.02em;text-transform:uppercase}
+    .table tr:last-child td{border-bottom:none}
+    .calc{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    @media (max-width:560px){ .calc{grid-template-columns:1fr} }
+    label.opt{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      cursor:pointer;
+    }
+    input[type="checkbox"]{
+      width:18px;height:18px;margin-top:2px;
+      accent-color: var(--accent);
+      flex: 0 0 auto;
+    }
+    .scorebox{
+      margin-top:10px;
+      padding:12px;
+      border-radius: 14px;
+      border:1px solid rgba(122,167,255,.25);
+      background: rgba(122,167,255,.08);
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .big{
+      font-size:20px; font-weight:950;
+      letter-spacing:.2px;
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      font-size:12px;
+      color: var(--muted);
+      background: rgba(0,0,0,.10);
+    }
+    footer{
+      padding:18px 14px 30px;
+      color: rgba(234,240,255,.65);
+      text-align:center;
+      font-size:12px;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
+    .divider{height:1px;background:var(--line);margin:12px 0}
+    .toast{
+      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+      background: rgba(17,27,46,.95);
+      border:1px solid var(--line);
+      color:var(--ink);
+      padding:10px 12px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      display:none;
+      max-width:min(680px, calc(100vw - 24px));
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="logo">🀄</div>
+        <div>
+          <h1>Singapore Mahjong — Quick Reminder</h1>
+          <div class="sub">Offline cheat-sheet + turn flow + tai checklist (customisable for house rules)</div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="primary" id="btnStart">Start: What do I do on my turn?</button>
+        <button id="btnReset" class="danger">Reset checklists</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="grid">
+
+    <!-- LEFT: How to play -->
+    <section class="card">
+      <h2>
+        <span>1) The game in 90 seconds</span>
+        <span class="pill">Setup → Draw/Discard → Claim → Win</span>
+      </h2>
+      <div class="content">
+
+        <div class="note">
+          Singapore mahjong commonly uses <b>148 tiles</b> (adds <b>4 animal tiles</b>) and often requires a <b>minimum 1 tai</b> to declare win (some groups require 2). House rules vary—use this as a reminder, not a legal code. 1
+        </div>
+
+        <div class="step">
+          <div class="bubble">A</div>
+          <div>
+            <b>Winning shape (most hands)</b><br/>
+            <span class="muted">4 sets (each set = 3 tiles) + 1 pair (2 tiles) = 14 tiles total.</span>
+            <ul>
+              <li><b>Chow</b> (sequence): e.g., 3-4-5 same suit</li>
+              <li><b>Pong</b> (triplet): 7-7-7</li>
+              <li><b>Kong</b> (quad): 9-9-9-9 (counts as a set; you draw replacement)</li>
+              <li><b>Eye</b> (pair): 2-2</li>
+            </ul>
+          </div>
+        </div>
+
+        <details open>
+          <summary>
+            <span>✅ Turn flow (your turn)</span>
+            <span class="small">tap to collapse</span>
+          </summary>
+          <div class="pad">
+            <ol>
+              <li><b>Draw</b> 1 tile (from wall; or from the back if you are taking a replacement for flower/animal/kong).</li>
+              <li>If it’s a <b>flower/season/animal</b>: place it face-up as bonus, then <b>draw replacement</b>. 2</li>
+              <li>Check if you can <b>Mahjong (win)</b> now (must meet your group’s minimum tai requirement). 3</li>
+              <li>If not, you may <b>declare Kong</b> (if you have 4 of a kind), then draw replacement.</li>
+              <li><b>Discard</b> 1 tile face-up.</li>
+            </ol>
+            <div class="note warn">
+              <b>Quick safety reminder:</b> After you discard, pay attention to what you “pass” on (especially if you skip a claim). Some Singapore references include “can’t claim the same tile until after your next turn” style restrictions—your table may or may not enforce this. 4
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🤝 Claiming tiles (from other players)</span>
+            <span class="small">pong / chow / kong / win</span>
+          </summary>
+          <div class="pad">
+            <ul>
+              <li><b>Win (Mahjong)</b>: you can usually claim the discard to complete a winning hand.</li>
+              <li><b>Pong</b>: if you have 2 matching tiles, you can claim the discard to form a triplet (exposed meld).</li>
+              <li><b>Kong</b>: if you have 3 matching tiles, claim to make 4 (exposed kong), then draw replacement.</li>
+              <li><b>Chow</b>: only from the player on your <b>left</b> (common rule) and only if it completes a sequence in the same suit. (House rules vary.)</li>
+            </ul>
+            <div class="note">
+              The “priority” commonly used: <b>Win</b> first, then <b>Pong/Kong</b>, then <b>Chow</b>.
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span>🧱 Setup checklist (fast)</span>
+            <span class="small">seats / walls / deal</span>
+          </summary>
+          <div class="pad">
+            <ol>
+              <li>Choose seats: <b>East (dealer)</b>, South, West, North.</li>
+              <li>Build walls; many Singapore guides describe a 19/18 wall split pattern (varies). 5</li>
+              <li>Deal: each player gets <b>13 tiles</b>; dealer starts with <b>14</b> and discards first.</li>
+              <li>Flowers/animals drawn during dealing are placed as bonus and replaced.</li>
+            </ol>
+          </div>
+        </details>
+
+      </div>
+    </section>
+
+    <!-- RIGHT: Tile & Tai -->
+    <aside class="card">
+      <h2>
+        <span>2) “Do I have enough tai?” (quick checklist)</span>
+        <span class="pill">customise</span>
+      </h2>
+      <div class="content">
+
+        <div class="note good">
+          Use this to <b>remind yourself</b> what to look for. Scoring differs by group, but these items are commonly counted in Singapore rulesets (flowers/animals/winds/dragons/flush etc.). 6
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row">
+          <span class="k">Min to win: <b class="mono" id="minTaiLabel">1</b> tai</span>
+          <button id="toggleMin">Toggle min (1 ↔ 2)</button>
+        </div>
+
+        <div class="calc" id="checks">
+          <!-- JS inserts checklist -->
+        </div>
+
+        <div class="scorebox">
+          <div>
+            <div class="muted">Estimated tai (based on your ticks)</div>
+            <div class="big"><span id="taiNow">0</span> tai</div>
+          </div>
+          <div class="row">
+            <span class="tag" id="statusTag">Not enough yet</span>
+            <button id="btnCopy" class="primary">Copy reminder</button>
+          </div>
+        </div>
+
+        <table class="table" aria-label="tile reminder">
+          <thead>
+            <tr><th>Tile groups (reminder)</th><th>What to remember</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>3 Suits</b><br/><span class="muted">Dots / Bamboo / Characters</span></td>
+              <td>Chows only within the same suit (e.g., 4-5-6 Bamboo).</td>
+            </tr>
+            <tr>
+              <td><b>Honours</b><br/><span class="muted">Winds + Dragons</span></td>
+              <td>Used for pongs/kongs/pairs (no sequences).</td>
+            </tr>
+            <tr>
+              <td><b>Bonus tiles</b><br/><span class="muted">Flowers/Seasons + Animals</span></td>
+              <td>When drawn: place face-up, draw replacement. Animals are part of Singapore/Malaysia variants. 7</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details style="margin-top:10px">
+          <summary>
+            <span>🧠 Strategy reminders (simple)</span>
+            <span class="small">read when rusty</span>
+          </summary>
+          <div class="pad">
+            <ul>
+              <li><b>Build towards tai early</b>: keep an eye on winds/dragons, your “own flower/season”, animals, or a half-flush plan.</li>
+              <li><b>Watch discards</b>: if many of a tile are already out, don’t rely on it as your pair.</li>
+              <li><b>Chow vs Pong</b>: chow is flexible but can be disrupted; pong is faster but can trap you.</li>
+              <li><b>Defence</b>: near the end, discard “safe” tiles (already seen many copies; honours that others likely don’t need).</li>
+            </ul>
+          </div>
+        </details>
+
+      </div>
+    </aside>
+
+  </div>
+
+  <section class="card" style="margin-top:14px">
+    <h2>
+      <span>3) Quick “what should I do now?” assistant</span>
+      <span class="pill">tap buttons</span>
+    </h2>
+    <div class="content">
+      <div class="row">
+        <button class="primary" id="qDraw">I just drew a tile</button>
+        <button id="qDiscard">I need to discard</button>
+        <button id="qClaim">Someone discarded a tile</button>
+        <button id="qWin">I think I can win</button>
+      </div>
+      <div class="note" id="advice" style="margin-top:10px">
+        Tap a button above to get a quick reminder.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Designed by Lim Kim Sze © 2026<br/>
+  Tip: Add this page to your phone home screen for a “mini app” feel (browser menu → Add to Home Screen).
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  // Minimal offline persistence (localStorage) so your checklist stays until reset
+  const KEY = "sgmj_reminder_v1";
+  const $ = (id)=>document.getElementById(id);
+
+  const model = {
+    minTai: 1,
+    // Common Singapore reminders (values are defaults; your group may differ)
+    items: [
+      { id:"ownFlower", tai:1, title:"Own flower/season", desc:"Your seat number matches flower/season (house rules vary)." },
+      { id:"animalEach", tai:1, title:"Animals (per tile)", desc:"Each animal often counts; some tables also pay bonuses for sets." },
+      { id:"animalSet", tai:1, title:"Complete all 4 animals", desc:"Some rules add an extra bonus when you collect all 4 animals." },
+      { id:"seatOrRoundWind", tai:1, title:"Pong/Kong of seat or round wind", desc:"Triplet of your seat wind / prevailing wind." },
+      { id:"dragonPong", tai:1, title:"Pong/Kong of any dragon", desc:"Triplet of Red/Green/White dragon." },
+      { id:"halfFlush", tai:2, title:"Half-flush (one suit + honours)", desc:"Also called 混一色 in some guides." },
+      { id:"fullFlush", tai:4, title:"Full flush (one suit only)", desc:"Also called 清一色; usually higher tai." },
+      { id:"allPongs", tai:2, title:"All pongs (no chows)", desc:"Hand made of only triplets/kongs + a pair." }
+    ]
+  };
+
+  function load(){
+    try{
+      const raw = localStorage.getItem(KEY);
+      if(!raw) return;
+      const data = JSON.parse(raw);
+      if(typeof data.minTai === "number") model.minTai = data.minTai;
+      if(data.checked && typeof data.checked === "object") {
+        model.items.forEach(it => it.checked = !!data.checked[it.id]);
+      }
+    }catch(e){}
+  }
+  function save(){
+    const checked = {};
+    model.items.forEach(it => checked[it.id] = !!it.checked);
+    localStorage.setItem(KEY, JSON.stringify({minTai:model.minTai, checked}));
+  }
+
+  function toast(msg){
+    const t = $("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(toast._tm);
+    toast._tm = setTimeout(()=>{ t.style.display="none"; }, 2200);
+  }
+
+  function renderChecklist(){
+    const wrap = $("checks");
+    wrap.innerHTML = "";
+    model.items.forEach(it=>{
+      const lab = document.createElement("label");
+      lab.className = "opt";
+      lab.innerHTML = `
+        <input type="checkbox" ${it.checked ? "checked": ""} />
+        <div>
+          <div><b>${it.title}</b> <span class="muted">(+${it.tai} tai)</span></div>
+          <div class="small">${it.desc}</div>
+        </div>
+      `;
+      const cb = lab.querySelector("input");
+      cb.addEventListener("change", ()=>{
+        it.checked = cb.checked;
+        save();
+        updateScore();
+      });
+      wrap.appendChild(lab);
+    });
+  }
+
+  function updateScore(){
+    let total = 0;
+    model.items.forEach(it=>{
+      if(it.checked) total += it.tai;
+    });
+    $("taiNow").textContent = String(total);
+    $("minTaiLabel").textContent = String(model.minTai);
+
+    const ok = total >= model.minTai;
+    const tag = $("statusTag");
+    tag.textContent = ok ? "Meets min tai (for many tables)" : "Not enough yet";
+    tag.style.borderColor = ok ? "rgba(46,229,157,.35)" : "rgba(255,92,122,.35)";
+    tag.style.background = ok ? "rgba(46,229,157,.10)" : "rgba(255,92,122,.10)";
+    tag.style.color = ok ? "rgba(234,240,255,.95)" : "rgba(234,240,255,.95)";
+  }
+
+  function setAdvice(title, bullets){
+    const box = $("advice");
+    box.innerHTML = `<b>${title}</b><ul>${bullets.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  }
+
+  function copyReminder(){
+    const total = Number($("taiNow").textContent || "0");
+    const picked = model.items.filter(it=>it.checked).map(it=>`- ${it.title} (+${it.tai})`).join("\n") || "- (none)";
+    const text =
+`Singapore Mahjong Reminder
+Min to win (your setting): ${model.minTai} tai
+Your checked tai: ${total}
+
+Checked items:
+${picked}
+
+Turn flow:
+Draw → (bonus tile? replace) → check win → optional kong → discard
+`;
+    navigator.clipboard?.writeText(text).then(()=>toast("Copied to clipboard ✅")).catch(()=>{
+      toast("Copy not supported here");
+    });
+  }
+
+  // Hook up buttons
+  $("toggleMin").addEventListener("click", ()=>{
+    model.minTai = (model.minTai === 1 ? 2 : 1);
+    save();
+    updateScore();
+    toast(`Min set to ${model.minTai} tai`);
+  });
+
+  $("btnReset").addEventListener("click", ()=>{
+    model.items.forEach(it=>it.checked=false);
+    save();
+    renderChecklist();
+    updateScore();
+    toast("Reset done");
+  });
+
+  $("btnCopy").addEventListener("click", copyReminder);
+
+  $("btnStart").addEventListener("click", ()=>{
+    window.scrollTo({top: 0, behavior:"smooth"});
+    toast("Start: Draw → Check → Discard");
+  });
+
+  $("qDraw").addEventListener("click", ()=>{
+    setAdvice("After you draw…", [
+      "If it’s a flower/season/animal: put it face-up as bonus, then draw replacement.",
+      "Check if you can win now (and whether you meet your table’s minimum tai).",
+      "If you can make a kong safely, declare it and draw replacement.",
+      "Then discard one tile."
+    ]);
+  });
+  $("qDiscard").addEventListener("click", ()=>{
+    setAdvice("When choosing a discard…", [
+      "Prefer tiles that don’t help your planned sets (or are already ‘dead’ / many seen).",
+      "Be careful discarding tiles that complete obvious chows for the player on your right (they chow from your discard).",
+      "Near endgame: play defensively—discard safer tiles (already heavily discarded)."
+    ]);
+  });
+  $("qClaim").addEventListener("click", ()=>{
+    setAdvice("When someone discards a tile…", [
+      "If it lets you win: you can usually take it and declare Mahjong.",
+      "Else: pong/kong if it speeds your hand AND doesn’t block your tai plan.",
+      "Chow only if allowed (often only from the player on your left) and it helps you reach a winnable hand."
+    ]);
+  });
+  $("qWin").addEventListener("click", ()=>{
+    setAdvice("Before you declare Mahjong…", [
+      "Confirm you have 4 sets + 1 pair (unless your table allows special hands).",
+      "Confirm you meet minimum tai (toggle 1/2 at the top if needed).",
+      "If winning on someone’s discard, check table rules for payment/shooter handling."
+    ]);
+  });
+
+  // Init
+  load();
+  renderChecklist();
+  updateScore();
+})();
+</script>
+</body>
+</html>
