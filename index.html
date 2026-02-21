@@ -1,193 +1,109 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-Hans">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Singapore Mahjong — Quick Reminder (Offline)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <title>新加坡麻将组合名称测验（选择题）</title>
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#111b2e;
-      --card2:#0f1729;
-      --ink:#eaf0ff;
-      --muted:#b9c4e6;
-      --line:rgba(255,255,255,.10);
-      --good:#2ee59d;
-      --warn:#ffd166;
-      --bad:#ff5c7a;
-      --accent:#7aa7ff;
-      --accent2:#9cffef;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --bg1:#071022; --bg2:#0b1733;
+      --card: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.12);
+      --ink:#eaf1ff; --muted:#b7c6ee;
+      --good:#2ee59d; --bad:#ff5c7a; --accent:#7aa7ff; --warn:#ffd166;
+      --shadow: 0 16px 42px rgba(0,0,0,.38);
       --r:18px;
     }
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at 20% 10%, rgba(122,167,255,.18), transparent 60%),
-                  radial-gradient(1000px 700px at 90% 30%, rgba(156,255,239,.12), transparent 55%),
-                  linear-gradient(180deg, #070c16, var(--bg));
-      color:var(--ink);
+      margin:0; color:var(--ink);
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+      background:
+        radial-gradient(1200px 900px at 15% 10%, rgba(122,167,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 85% 25%, rgba(46,229,157,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
     }
     header{
       position:sticky; top:0; z-index:10;
       backdrop-filter: blur(10px);
-      background: rgba(7,12,22,.68);
-      border-bottom: 1px solid var(--line);
+      background: rgba(7,16,34,.70);
+      border-bottom:1px solid var(--line);
     }
-    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 28px}
-    .top{
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
+    .wrap{max-width:980px;margin:0 auto;padding:14px 14px 26px}
+    .top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .brand{display:flex;gap:12px;align-items:center}
     .logo{
       width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg, rgba(122,167,255,.95), rgba(156,255,239,.85));
+      background: linear-gradient(135deg, rgba(122,167,255,.95), rgba(46,229,157,.70));
       box-shadow: var(--shadow);
       display:grid; place-items:center;
       color:#06101e; font-weight:900;
     }
-    h1{font-size:18px;margin:0}
-    .sub{color:var(--muted);font-size:12px;margin-top:2px}
-    .btns{display:flex;gap:10px;flex-wrap:wrap}
-    button, .chip{
+    h1{margin:0;font-size:18px}
+    .sub{margin-top:2px;font-size:12px;color:var(--muted)}
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-size:12px;color:var(--muted); font-weight:650;
+    }
+    .grid{
+      display:grid; gap:14px; margin-top:14px;
+      grid-template-columns: 1.2fr .8fr;
+    }
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+    .card{
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0; padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      font-size:14px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .content{padding:12px 14px 14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    button{
       border:1px solid var(--line);
       background: rgba(255,255,255,.04);
       color:var(--ink);
       padding:10px 12px;
       border-radius: 14px;
       cursor:pointer;
-      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+      font-weight:750;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
       transition: transform .06s ease, background .2s ease, border-color .2s ease;
-      font-weight:650;
     }
     button:active{transform: translateY(1px) scale(.99)}
     button.primary{
-      background: linear-gradient(135deg, rgba(122,167,255,.45), rgba(156,255,239,.18));
+      background: linear-gradient(135deg, rgba(122,167,255,.45), rgba(46,229,157,.16));
       border-color: rgba(122,167,255,.35);
     }
+    button.ghost{background: transparent}
     button.danger{border-color: rgba(255,92,122,.35)}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:14px;
-      margin-top:14px;
-    }
-    @media (max-width: 880px){
-      .grid{grid-template-columns: 1fr}
-    }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      border:1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card h2{
-      margin:0; font-size:15px;
-      padding:14px 14px 10px;
-      border-bottom:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .card .content{padding:12px 14px 14px}
-    .pill{
-      font-size:12px;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid var(--line);
-      color:var(--muted);
-      white-space:nowrap;
-    }
     .k{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
+      display:inline-flex; gap:8px; align-items:center;
+      padding:7px 10px; border-radius: 999px;
       border:1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size:12px;
-      background: rgba(0,0,0,.15);
-    }
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .note{
-      border-left: 3px solid rgba(122,167,255,.55);
-      background: rgba(122,167,255,.08);
-      padding:10px 12px;border-radius: 12px;
-      color: var(--muted);
-      font-size:13px;
-    }
-    .warn{
-      border-left-color: rgba(255,209,102,.7);
-      background: rgba(255,209,102,.08);
-    }
-    .good{
-      border-left-color: rgba(46,229,157,.7);
-      background: rgba(46,229,157,.07);
-    }
-    details{
-      border:1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(0,0,0,.12);
-      overflow:hidden;
-    }
-    details + details{margin-top:10px}
-    summary{
-      list-style:none;
-      cursor:pointer;
-      padding:12px 12px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      font-weight:750;
-    }
-    summary::-webkit-details-marker{display:none}
-    .small{font-size:12px;color:var(--muted);font-weight:600}
-    .pad{padding:0 12px 12px}
-    ol, ul{margin:8px 0 0 18px;color:var(--muted)}
-    li{margin:6px 0}
-    .step{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 10px; border:1px dashed rgba(255,255,255,.12);
-      border-radius: 14px; background: rgba(255,255,255,.03);
-      margin-top:10px;
-    }
-    .bubble{
-      width:28px;height:28px;border-radius:10px;
-      background: rgba(156,255,239,.16);
-      border:1px solid rgba(156,255,239,.28);
-      display:grid;place-items:center;
-      font-weight:900;
-      color: var(--accent2);
-      flex: 0 0 auto;
-    }
-    .step b{color:var(--ink)}
-    .muted{color:var(--muted)}
-    .table{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.10);
-      margin-top:10px;
-    }
-    .table th, .table td{
-      text-align:left;
-      padding:10px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.14);
       color:var(--muted);
-      vertical-align:top;
-      font-size:13px;
+      font-size:12px; font-weight:650;
     }
-    .table th{color:var(--ink);font-size:12px;letter-spacing:.02em;text-transform:uppercase}
-    .table tr:last-child td{border-bottom:none}
-    .calc{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
+    .question{
+      padding:12px; border:1px dashed rgba(255,255,255,.14);
+      border-radius: 16px;
+      background: rgba(0,0,0,.12);
     }
-    @media (max-width:560px){ .calc{grid-template-columns:1fr} }
-    label.opt{
+    .qtitle{font-size:15px;font-weight:900;margin:0 0 6px}
+    .qprompt{color:var(--muted);font-size:13px;margin:0 0 10px;line-height:1.35}
+    .choices{display:grid;gap:10px}
+    .choice{
       display:flex; gap:10px; align-items:flex-start;
       padding:10px 10px;
       border:1px solid var(--line);
@@ -195,53 +111,64 @@
       background: rgba(255,255,255,.03);
       cursor:pointer;
     }
-    input[type="checkbox"]{
-      width:18px;height:18px;margin-top:2px;
-      accent-color: var(--accent);
-      flex: 0 0 auto;
-    }
-    .scorebox{
+    .choice input{margin-top:3px; width:18px;height:18px; accent-color: var(--accent)}
+    .choice b{display:block}
+    .choice .small{color:var(--muted);font-size:12px;margin-top:2px}
+    .feedback{
       margin-top:10px;
-      padding:12px;
-      border-radius: 14px;
-      border:1px solid rgba(122,167,255,.25);
+      border-left:3px solid rgba(122,167,255,.55);
       background: rgba(122,167,255,.08);
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      align-items:center;
+      padding:10px 12px;
+      border-radius: 12px;
+      color:var(--muted);
+      font-size:13px;
+      display:none;
     }
-    .big{
-      font-size:20px; font-weight:950;
-      letter-spacing:.2px;
+    .feedback.good{border-left-color: rgba(46,229,157,.75); background: rgba(46,229,157,.08)}
+    .feedback.bad{border-left-color: rgba(255,92,122,.70); background: rgba(255,92,122,.08)}
+    .scorebox{
+      margin-top:12px;
+      padding:12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.12);
     }
-    .tag{
-      display:inline-flex; align-items:center; gap:6px;
-      padding:6px 10px;
-      border-radius: 999px;
+    .big{font-size:22px;font-weight:950}
+    .muted{color:var(--muted)}
+    .list{
+      margin-top:10px;
+      display:grid; gap:10px;
+    }
+    .log{
       border:1px solid var(--line);
-      font-size:12px;
-      color: var(--muted);
-      background: rgba(0,0,0,.10);
+      border-radius: 14px;
+      padding:10px 10px;
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      font-size:13px;
     }
+    .log b{color:var(--ink)}
     footer{
-      padding:18px 14px 30px;
-      color: rgba(234,240,255,.65);
+      padding:18px 14px 28px;
       text-align:center;
+      color: rgba(234,241,255,.70);
       font-size:12px;
     }
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
-    .divider{height:1px;background:var(--line);margin:12px 0}
     .toast{
       position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
-      background: rgba(17,27,46,.95);
+      background: rgba(20,30,52,.95);
       border:1px solid var(--line);
       color:var(--ink);
       padding:10px 12px;
       border-radius: 14px;
       box-shadow: var(--shadow);
       display:none;
-      max-width:min(680px, calc(100vw - 24px));
+      max-width:min(720px, calc(100vw - 24px));
       font-size:13px;
+      z-index:50;
     }
+    .mini{font-size:12px}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;}
   </style>
 </head>
 <body>
@@ -251,13 +178,12 @@
       <div class="brand">
         <div class="logo">🀄</div>
         <div>
-          <h1>Singapore Mahjong — Quick Reminder</h1>
-          <div class="sub">Offline cheat-sheet + turn flow + tai checklist (customisable for house rules)</div>
+          <h1>新加坡麻将组合名称测验（Multiple Choice）</h1>
+          <div class="sub">练习：半色 / 清一色 / 平湖 / 臭平湖 / 门清 / 单调 / 两面等 / 碰碰胡 / 七对</div>
         </div>
       </div>
-      <div class="btns">
-        <button class="primary" id="btnStart">Start: What do I do on my turn?</button>
-        <button id="btnReset" class="danger">Reset checklists</button>
+      <div class="row">
+        <span class="pill">离线可用 · 随机出题 · 即时讲解</span>
       </div>
     </div>
   </div>
@@ -266,223 +192,258 @@
 <main class="wrap">
   <div class="grid">
 
-    <!-- LEFT: How to play -->
+    <!-- Quiz -->
     <section class="card">
       <h2>
-        <span>1) The game in 90 seconds</span>
-        <span class="pill">Setup → Draw/Discard → Claim → Win</span>
+        <span>测验</span>
+        <span class="k">题目 <b class="mono" id="qIndex">1</b>/<b class="mono" id="qTotal">10</b></span>
       </h2>
       <div class="content">
 
-        <div class="note">
-          Singapore mahjong commonly uses <b>148 tiles</b> (adds <b>4 animal tiles</b>) and often requires a <b>minimum 1 tai</b> to declare win (some groups require 2). House rules vary—use this as a reminder, not a legal code. 1
-        </div>
-
-        <div class="step">
-          <div class="bubble">A</div>
-          <div>
-            <b>Winning shape (most hands)</b><br/>
-            <span class="muted">4 sets (each set = 3 tiles) + 1 pair (2 tiles) = 14 tiles total.</span>
-            <ul>
-              <li><b>Chow</b> (sequence): e.g., 3-4-5 same suit</li>
-              <li><b>Pong</b> (triplet): 7-7-7</li>
-              <li><b>Kong</b> (quad): 9-9-9-9 (counts as a set; you draw replacement)</li>
-              <li><b>Eye</b> (pair): 2-2</li>
-            </ul>
+        <div class="row" style="justify-content:space-between">
+          <div class="row">
+            <span class="k">模式：<b id="modeLabel">10 题随机</b></span>
+            <span class="k">分数：<b class="mono" id="scoreNow">0</b></span>
+          </div>
+          <div class="row">
+            <button class="ghost" id="btnNew">新一轮（换题）</button>
+            <button class="danger" id="btnReset">清除记录</button>
           </div>
         </div>
 
-        <details open>
-          <summary>
-            <span>✅ Turn flow (your turn)</span>
-            <span class="small">tap to collapse</span>
-          </summary>
-          <div class="pad">
-            <ol>
-              <li><b>Draw</b> 1 tile (from wall; or from the back if you are taking a replacement for flower/animal/kong).</li>
-              <li>If it’s a <b>flower/season/animal</b>: place it face-up as bonus, then <b>draw replacement</b>. 2</li>
-              <li>Check if you can <b>Mahjong (win)</b> now (must meet your group’s minimum tai requirement). 3</li>
-              <li>If not, you may <b>declare Kong</b> (if you have 4 of a kind), then draw replacement.</li>
-              <li><b>Discard</b> 1 tile face-up.</li>
-            </ol>
-            <div class="note warn">
-              <b>Quick safety reminder:</b> After you discard, pay attention to what you “pass” on (especially if you skip a claim). Some Singapore references include “can’t claim the same tile until after your next turn” style restrictions—your table may or may not enforce this. 4
+        <div style="height:12px"></div>
+
+        <div class="question">
+          <p class="qtitle" id="qTitle">加载中…</p>
+          <p class="qprompt" id="qPrompt"></p>
+          <div class="choices" id="choices"></div>
+
+          <div class="row" style="margin-top:10px">
+            <button class="primary" id="btnCheck">检查答案</button>
+            <button id="btnNext">下一题</button>
+          </div>
+
+          <div class="feedback" id="fb"></div>
+        </div>
+
+        <div class="scorebox">
+          <div class="row" style="justify-content:space-between;align-items:flex-end">
+            <div>
+              <div class="muted mini">本轮进度</div>
+              <div class="big"><span id="doneNow">0</span>/<span id="doneTotal">10</span></div>
+            </div>
+            <div class="row">
+              <span class="k">正确：<b class="mono" id="correctNow">0</b></span>
+              <span class="k">错误：<b class="mono" id="wrongNow">0</b></span>
             </div>
           </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>🤝 Claiming tiles (from other players)</span>
-            <span class="small">pong / chow / kong / win</span>
-          </summary>
-          <div class="pad">
-            <ul>
-              <li><b>Win (Mahjong)</b>: you can usually claim the discard to complete a winning hand.</li>
-              <li><b>Pong</b>: if you have 2 matching tiles, you can claim the discard to form a triplet (exposed meld).</li>
-              <li><b>Kong</b>: if you have 3 matching tiles, claim to make 4 (exposed kong), then draw replacement.</li>
-              <li><b>Chow</b>: only from the player on your <b>left</b> (common rule) and only if it completes a sequence in the same suit. (House rules vary.)</li>
-            </ul>
-            <div class="note">
-              The “priority” commonly used: <b>Win</b> first, then <b>Pong/Kong</b>, then <b>Chow</b>.
-            </div>
+          <div class="muted" style="margin-top:8px;line-height:1.35">
+            提醒：这套题只测<strong>名称与定义</strong>，不涉及台数（tai）和包牌（shooter）等各桌不同规则。
           </div>
-        </details>
-
-        <details>
-          <summary>
-            <span>🧱 Setup checklist (fast)</span>
-            <span class="small">seats / walls / deal</span>
-          </summary>
-          <div class="pad">
-            <ol>
-              <li>Choose seats: <b>East (dealer)</b>, South, West, North.</li>
-              <li>Build walls; many Singapore guides describe a 19/18 wall split pattern (varies). 5</li>
-              <li>Deal: each player gets <b>13 tiles</b>; dealer starts with <b>14</b> and discards first.</li>
-              <li>Flowers/animals drawn during dealing are placed as bonus and replaced.</li>
-            </ol>
-          </div>
-        </details>
+        </div>
 
       </div>
     </section>
 
-    <!-- RIGHT: Tile & Tai -->
+    <!-- Reference -->
     <aside class="card">
       <h2>
-        <span>2) “Do I have enough tai?” (quick checklist)</span>
-        <span class="pill">customise</span>
+        <span>速记卡（Quick Reference）</span>
+        <span class="k">一眼看懂</span>
       </h2>
       <div class="content">
-
-        <div class="note good">
-          Use this to <b>remind yourself</b> what to look for. Scoring differs by group, but these items are commonly counted in Singapore rulesets (flowers/animals/winds/dragons/flush etc.). 6
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="row">
-          <span class="k">Min to win: <b class="mono" id="minTaiLabel">1</b> tai</span>
-          <button id="toggleMin">Toggle min (1 ↔ 2)</button>
-        </div>
-
-        <div class="calc" id="checks">
-          <!-- JS inserts checklist -->
-        </div>
-
-        <div class="scorebox">
-          <div>
-            <div class="muted">Estimated tai (based on your ticks)</div>
-            <div class="big"><span id="taiNow">0</span> tai</div>
-          </div>
-          <div class="row">
-            <span class="tag" id="statusTag">Not enough yet</span>
-            <button id="btnCopy" class="primary">Copy reminder</button>
+        <div class="list" id="refList"></div>
+        <div class="scorebox" style="margin-top:12px">
+          <div class="muted mini">你朋友桌常见 house rule（可自行改）</div>
+          <div class="muted" style="margin-top:6px;line-height:1.35">
+            • 臭平湖 = 1 台，但<strong>不能单调</strong><br/>
+            • 大牌（中发白）不能做眼<br/>
+            • 自己风/圈风不能做眼（其他风通常可做眼）<br/>
           </div>
         </div>
-
-        <table class="table" aria-label="tile reminder">
-          <thead>
-            <tr><th>Tile groups (reminder)</th><th>What to remember</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><b>3 Suits</b><br/><span class="muted">Dots / Bamboo / Characters</span></td>
-              <td>Chows only within the same suit (e.g., 4-5-6 Bamboo).</td>
-            </tr>
-            <tr>
-              <td><b>Honours</b><br/><span class="muted">Winds + Dragons</span></td>
-              <td>Used for pongs/kongs/pairs (no sequences).</td>
-            </tr>
-            <tr>
-              <td><b>Bonus tiles</b><br/><span class="muted">Flowers/Seasons + Animals</span></td>
-              <td>When drawn: place face-up, draw replacement. Animals are part of Singapore/Malaysia variants. 7</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <details style="margin-top:10px">
-          <summary>
-            <span>🧠 Strategy reminders (simple)</span>
-            <span class="small">read when rusty</span>
-          </summary>
-          <div class="pad">
-            <ul>
-              <li><b>Build towards tai early</b>: keep an eye on winds/dragons, your “own flower/season”, animals, or a half-flush plan.</li>
-              <li><b>Watch discards</b>: if many of a tile are already out, don’t rely on it as your pair.</li>
-              <li><b>Chow vs Pong</b>: chow is flexible but can be disrupted; pong is faster but can trap you.</li>
-              <li><b>Defence</b>: near the end, discard “safe” tiles (already seen many copies; honours that others likely don’t need).</li>
-            </ul>
-          </div>
-        </details>
-
+        <div class="row" style="margin-top:10px">
+          <button class="primary" id="btnCopyCheat">复制速记卡</button>
+        </div>
       </div>
     </aside>
 
   </div>
-
-  <section class="card" style="margin-top:14px">
-    <h2>
-      <span>3) Quick “what should I do now?” assistant</span>
-      <span class="pill">tap buttons</span>
-    </h2>
-    <div class="content">
-      <div class="row">
-        <button class="primary" id="qDraw">I just drew a tile</button>
-        <button id="qDiscard">I need to discard</button>
-        <button id="qClaim">Someone discarded a tile</button>
-        <button id="qWin">I think I can win</button>
-      </div>
-      <div class="note" id="advice" style="margin-top:10px">
-        Tap a button above to get a quick reminder.
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
-  Designed by Lim Kim Sze © 2026<br/>
-  Tip: Add this page to your phone home screen for a “mini app” feel (browser menu → Add to Home Screen).
+  Designed by Lim Kim Sze © 2026
 </footer>
 
 <div class="toast" id="toast"></div>
 
 <script>
-(function(){
-  // Minimal offline persistence (localStorage) so your checklist stays until reset
-  const KEY = "sgmj_reminder_v1";
-  const $ = (id)=>document.getElementById(id);
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const KEY = "sgmj_name_quiz_v1";
 
-  const model = {
-    minTai: 1,
-    // Common Singapore reminders (values are defaults; your group may differ)
-    items: [
-      { id:"ownFlower", tai:1, title:"Own flower/season", desc:"Your seat number matches flower/season (house rules vary)." },
-      { id:"animalEach", tai:1, title:"Animals (per tile)", desc:"Each animal often counts; some tables also pay bonuses for sets." },
-      { id:"animalSet", tai:1, title:"Complete all 4 animals", desc:"Some rules add an extra bonus when you collect all 4 animals." },
-      { id:"seatOrRoundWind", tai:1, title:"Pong/Kong of seat or round wind", desc:"Triplet of your seat wind / prevailing wind." },
-      { id:"dragonPong", tai:1, title:"Pong/Kong of any dragon", desc:"Triplet of Red/Green/White dragon." },
-      { id:"halfFlush", tai:2, title:"Half-flush (one suit + honours)", desc:"Also called 混一色 in some guides." },
-      { id:"fullFlush", tai:4, title:"Full flush (one suit only)", desc:"Also called 清一色; usually higher tai." },
-      { id:"allPongs", tai:2, title:"All pongs (no chows)", desc:"Hand made of only triplets/kongs + a pair." }
-    ]
+  const TERMS = [
+    {
+      id:"banse",
+      zh:"半色（混一色）",
+      en:"Half Flush",
+      defZh:"只用一种花色（万/索/筒其中一种）+ 可以有字牌（风/中发白）。不能混第二种花色。",
+      defEn:"One suit + honors allowed. No second suit.",
+      promptVariants:[
+        {promptZh:"牌里只有“索子” + 风牌/龙牌（中发白）也可以出现。这叫什么？", promptEn:"Only ONE suit + honors (winds/dragons). What is this called?"}
+      ]
+    },
+    {
+      id:"qingyise",
+      zh:"清一色",
+      en:"Full Flush / Pure Suit",
+      defZh:"全部同一种花色（万/索/筒其中一种），没有任何字牌（风/中发白）。",
+      defEn:"One suit only. No honors.",
+      promptVariants:[
+        {promptZh:"整副牌只看到“筒子”，没有风牌、没有中发白。这叫什么？", promptEn:"All tiles are one suit only (no honors). Name?"}
+      ]
+    },
+    {
+      id:"pinghu",
+      zh:"平湖",
+      en:"Ping Hu (Normal hand)",
+      defZh:"最普通的胡牌：4 副牌 + 1 对眼。通常顺子多、没有特别牌型加成。",
+      defEn:"Standard 4 melds + 1 pair. Usually sequence-heavy, no special pattern.",
+      promptVariants:[
+        {promptZh:"4 副牌 + 1 对眼，主要由顺子组成，没有半色/清一色/碰碰等。这叫什么？", promptEn:"Basic hand, mostly sequences, no special pattern. Name?"}
+      ]
+    },
+    {
+      id:"choupinghu",
+      zh:"臭平湖（无番平湖）",
+      en:"Stinky Ping Hu / No-tai hand",
+      defZh:"看起来是平湖，但没有任何加分来源（花、门清、半色、风刻/龙刻等）。很多桌原本 0 台不能胡；有些桌给最低 1 台。",
+      defEn:"Looks like Ping Hu but no scoring features. Some tables disallow; some give minimum tai.",
+      promptVariants:[
+        {promptZh:"只有顺子和一对眼，没有花、没有风龙刻、不是半色清一色，也没门清加成。这通常叫？", promptEn:"Plain Ping Hu with no bonuses/features. Common nickname?"}
+      ]
+    },
+    {
+      id:"menqing",
+      zh:"门清",
+      en:"Men Qing (Concealed hand)",
+      defZh:"全程没有吃、碰、明杠（不拿别人打出的牌组成副牌）。全部自己摸成牌。",
+      defEn:"No exposed melds; you didn’t chow/pong from others.",
+      promptVariants:[
+        {promptZh:"整局没吃没碰没明杠，全靠自己摸牌成牌。这叫什么？", promptEn:"Fully concealed (no exposed melds). Name?"}
+      ]
+    },
+    {
+      id:"dandiao",
+      zh:"单调（单张等）",
+      en:"Single Wait",
+      defZh:"只等 1 张牌才能胡。常见：卡张（嵌张）、边张、单钓将（等对子）。",
+      defEn:"Only one tile completes the hand (closed/edge/pair wait).",
+      promptVariants:[
+        {promptZh:"你只等一张牌才能胡（例如 2 _ 4 等 3 / 1-2 等 3 / 等对子）。这叫？", promptEn:"Only ONE tile can win. What’s this wait called?"}
+      ]
+    },
+    {
+      id:"liangmian",
+      zh:"两面等（两头等）",
+      en:"Two-sided wait",
+      defZh:"等两张牌都能胡。例如 3-4 可以等 2 或 5。",
+      defEn:"Two tiles can complete (e.g., 3-4 waits 2 or 5).",
+      promptVariants:[
+        {promptZh:"3-4 这种等法，可以来 2 或 5 都能胡。这叫？", promptEn:"Two-sided wait (e.g., 3-4 waits 2 or 5). Name?"}
+      ]
+    },
+    {
+      id:"pengpenghu",
+      zh:"碰碰胡（对对胡）",
+      en:"All Pongs / All Triplets",
+      defZh:"4 副牌全部是刻子/杠子（没有顺子）+ 1 对眼。",
+      defEn:"All melds are triplets/kongs (no sequences) + a pair.",
+      promptVariants:[
+        {promptZh:"整副胡牌没有顺子，全部是刻子/杠子加一对眼。这叫什么？", promptEn:"No sequences, all triplets/kongs + a pair. Name?"}
+      ]
+    },
+    {
+      id:"qidui",
+      zh:"七对",
+      en:"Seven Pairs",
+      defZh:"14 张组成 7 个对子，不需要顺子/刻子结构。",
+      defEn:"7 pairs (14 tiles), no meld structure needed.",
+      promptVariants:[
+        {promptZh:"14 张牌直接凑成 7 个对子（不做顺刻）。这叫什么？", promptEn:"14 tiles = 7 pairs. Name?"}
+      ]
+    },
+    {
+      id:"pinghu_qingyise",
+      zh:"平湖清一色（顺子清一色）",
+      en:"Pure Ping Hu (Full flush + sequences)",
+      defZh:"清一色 + 平湖：同一种花色、以顺子为主、无字牌。",
+      defEn:"Full flush made as a Ping Hu style (sequence-heavy).",
+      promptVariants:[
+        {promptZh:"清一色，而且几乎全是顺子（像平湖那样）。这常被叫？", promptEn:"Full flush but sequence-heavy like Ping Hu. Name?"}
+      ]
+    }
+  ];
+
+  // Build a pool of questions from term prompt variants
+  function buildQuestionPool(){
+    const pool = [];
+    for(const t of TERMS){
+      for(const pv of t.promptVariants){
+        pool.push({
+          termId: t.id,
+          answer: t.zh, // display Chinese name as answer label
+          answerEn: t.en,
+          promptZh: pv.promptZh,
+          promptEn: pv.promptEn,
+        });
+      }
+    }
+    return pool;
+  }
+
+  function shuffle(a){
+    for(let i=a.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [a[i],a[j]]=[a[j],a[i]];
+    }
+    return a;
+  }
+
+  // State
+  const state = {
+    roundSize: 10,
+    order: [],
+    idx: 0,
+    picked: null,
+    locked: false,
+    score: 0,
+    correct: 0,
+    wrong: 0,
+    history: [] // {q, picked, correct}
   };
 
   function load(){
     try{
       const raw = localStorage.getItem(KEY);
-      if(!raw) return;
+      if(!raw) return false;
       const data = JSON.parse(raw);
-      if(typeof data.minTai === "number") model.minTai = data.minTai;
-      if(data.checked && typeof data.checked === "object") {
-        model.items.forEach(it => it.checked = !!data.checked[it.id]);
-      }
-    }catch(e){}
+      if(!data || typeof data !== "object") return false;
+      Object.assign(state, data);
+      return true;
+    }catch(e){ return false; }
   }
   function save(){
-    const checked = {};
-    model.items.forEach(it => checked[it.id] = !!it.checked);
-    localStorage.setItem(KEY, JSON.stringify({minTai:model.minTai, checked}));
+    localStorage.setItem(KEY, JSON.stringify({
+      roundSize: state.roundSize,
+      order: state.order,
+      idx: state.idx,
+      picked: state.picked,
+      locked: state.locked,
+      score: state.score,
+      correct: state.correct,
+      wrong: state.wrong,
+      history: state.history
+    }));
   }
 
   function toast(msg){
@@ -490,130 +451,245 @@
     t.textContent = msg;
     t.style.display = "block";
     clearTimeout(toast._tm);
-    toast._tm = setTimeout(()=>{ t.style.display="none"; }, 2200);
+    toast._tm = setTimeout(()=>{ t.style.display="none"; }, 2100);
   }
 
-  function renderChecklist(){
-    const wrap = $("checks");
+  function getTermById(id){ return TERMS.find(x=>x.id===id); }
+
+  function newRound(){
+    const pool = buildQuestionPool();
+    shuffle(pool);
+    state.order = pool.slice(0, state.roundSize);
+    state.idx = 0;
+    state.picked = null;
+    state.locked = false;
+    state.score = 0;
+    state.correct = 0;
+    state.wrong = 0;
+    state.history = [];
+    save();
+    render();
+    toast("新一轮已开始 ✅");
+  }
+
+  function resetAll(){
+    localStorage.removeItem(KEY);
+    toast("记录已清除");
+    // Start fresh
+    newRound();
+  }
+
+  function makeChoices(q){
+    // choices are term zh names; include 4 options
+    const correctTerm = getTermById(q.termId);
+    const options = [correctTerm];
+
+    const others = TERMS.filter(t => t.id !== correctTerm.id);
+    shuffle(others);
+    for(const o of others){
+      options.push(o);
+      if(options.length >= 4) break;
+    }
+    shuffle(options);
+
+    return options.map(t => ({
+      labelZh: t.zh,
+      labelEn: t.en,
+      id: t.id
+    }));
+  }
+
+  function render(){
+    const total = state.order.length || state.roundSize;
+    $("qTotal").textContent = String(total);
+    $("doneTotal").textContent = String(total);
+
+    $("qIndex").textContent = String(Math.min(state.idx+1, total));
+    $("doneNow").textContent = String(state.idx);
+    $("scoreNow").textContent = String(state.score);
+    $("correctNow").textContent = String(state.correct);
+    $("wrongNow").textContent = String(state.wrong);
+
+    const q = state.order[state.idx];
+    if(!q){
+      // finished
+      $("qTitle").textContent = "本轮完成 ✅";
+      $("qPrompt").innerHTML = `你完成了本轮 ${total} 题。<br><span class="muted">Final score: ${state.score}/${total}</span>`;
+      $("choices").innerHTML = "";
+      $("btnCheck").disabled = true;
+      $("btnNext").disabled = true;
+      const fb = $("fb");
+      fb.className = "feedback good";
+      fb.style.display = "block";
+      fb.innerHTML = `<b>总结 Summary</b><br>正确 ${state.correct}，错误 ${state.wrong}。<br><span class="muted">按「新一轮」再来。</span>`;
+      save();
+      return;
+    }
+
+    $("btnCheck").disabled = false;
+    $("btnNext").disabled = !state.locked;
+
+    // Question title and prompt
+    $("qTitle").textContent = "这是什么牌型/术语？";
+    $("qPrompt").innerHTML = `<b>中文：</b>${escapeHtml(q.promptZh)}<br><b>English:</b> ${escapeHtml(q.promptEn)}`;
+
+    // Choices
+    const choices = makeChoices(q);
+    const wrap = $("choices");
     wrap.innerHTML = "";
-    model.items.forEach(it=>{
+    for(const c of choices){
       const lab = document.createElement("label");
-      lab.className = "opt";
+      lab.className = "choice";
+      const checked = (state.picked === c.id) ? "checked" : "";
       lab.innerHTML = `
-        <input type="checkbox" ${it.checked ? "checked": ""} />
+        <input type="radio" name="opt" value="${c.id}" ${checked} ${state.locked ? "disabled": ""}/>
         <div>
-          <div><b>${it.title}</b> <span class="muted">(+${it.tai} tai)</span></div>
-          <div class="small">${it.desc}</div>
+          <b>${escapeHtml(c.labelZh)}</b>
+          <div class="small">${escapeHtml(c.labelEn)}</div>
         </div>
       `;
-      const cb = lab.querySelector("input");
-      cb.addEventListener("change", ()=>{
-        it.checked = cb.checked;
+      const inp = lab.querySelector("input");
+      inp.addEventListener("change", () => {
+        if(state.locked) return;
+        state.picked = inp.value;
         save();
-        updateScore();
       });
       wrap.appendChild(lab);
-    });
-  }
+    }
 
-  function updateScore(){
-    let total = 0;
-    model.items.forEach(it=>{
-      if(it.checked) total += it.tai;
-    });
-    $("taiNow").textContent = String(total);
-    $("minTaiLabel").textContent = String(model.minTai);
+    // Feedback
+    const fb = $("fb");
+    fb.style.display = "none";
+    fb.className = "feedback";
+    fb.textContent = "";
 
-    const ok = total >= model.minTai;
-    const tag = $("statusTag");
-    tag.textContent = ok ? "Meets min tai (for many tables)" : "Not enough yet";
-    tag.style.borderColor = ok ? "rgba(46,229,157,.35)" : "rgba(255,92,122,.35)";
-    tag.style.background = ok ? "rgba(46,229,157,.10)" : "rgba(255,92,122,.10)";
-    tag.style.color = ok ? "rgba(234,240,255,.95)" : "rgba(234,240,255,.95)";
-  }
-
-  function setAdvice(title, bullets){
-    const box = $("advice");
-    box.innerHTML = `<b>${title}</b><ul>${bullets.map(x=>`<li>${x}</li>`).join("")}</ul>`;
-  }
-
-  function copyReminder(){
-    const total = Number($("taiNow").textContent || "0");
-    const picked = model.items.filter(it=>it.checked).map(it=>`- ${it.title} (+${it.tai})`).join("\n") || "- (none)";
-    const text =
-`Singapore Mahjong Reminder
-Min to win (your setting): ${model.minTai} tai
-Your checked tai: ${total}
-
-Checked items:
-${picked}
-
-Turn flow:
-Draw → (bonus tile? replace) → check win → optional kong → discard
-`;
-    navigator.clipboard?.writeText(text).then(()=>toast("Copied to clipboard ✅")).catch(()=>{
-      toast("Copy not supported here");
-    });
-  }
-
-  // Hook up buttons
-  $("toggleMin").addEventListener("click", ()=>{
-    model.minTai = (model.minTai === 1 ? 2 : 1);
     save();
-    updateScore();
-    toast(`Min set to ${model.minTai} tai`);
-  });
+  }
 
-  $("btnReset").addEventListener("click", ()=>{
-    model.items.forEach(it=>it.checked=false);
+  function checkAnswer(){
+    const q = state.order[state.idx];
+    if(!q) return;
+    if(state.locked) return;
+
+    if(!state.picked){
+      toast("先选一个答案 🙂");
+      return;
+    }
+
+    const correctTerm = getTermById(q.termId);
+    const pickedTerm = getTermById(state.picked);
+
+    const isCorrect = (pickedTerm && pickedTerm.id === correctTerm.id);
+    state.locked = true;
+
+    const fb = $("fb");
+    fb.style.display = "block";
+    fb.className = "feedback " + (isCorrect ? "good" : "bad");
+
+    if(isCorrect){
+      state.score += 1;
+      state.correct += 1;
+      fb.innerHTML = `✅ <b>答对了！</b><br>
+        <b>${escapeHtml(correctTerm.zh)}</b> — ${escapeHtml(correctTerm.en)}<br>
+        <span class="muted">${escapeHtml(correctTerm.defZh)}<br>${escapeHtml(correctTerm.defEn)}</span>`;
+    }else{
+      state.wrong += 1;
+      fb.innerHTML = `❌ <b>不对</b><br>
+        你选：<b>${escapeHtml(pickedTerm ? pickedTerm.zh : "—")}</b><br>
+        正确：<b>${escapeHtml(correctTerm.zh)}</b> — ${escapeHtml(correctTerm.en)}<br>
+        <span class="muted">${escapeHtml(correctTerm.defZh)}<br>${escapeHtml(correctTerm.defEn)}</span>`;
+    }
+
+    state.history.push({
+      idx: state.idx,
+      termId: q.termId,
+      picked: state.picked,
+      correct: isCorrect
+    });
+
     save();
-    renderChecklist();
-    updateScore();
-    toast("Reset done");
-  });
+    renderProgressOnly();
+    $("btnNext").disabled = false;
+  }
 
-  $("btnCopy").addEventListener("click", copyReminder);
+  function nextQuestion(){
+    if(!state.locked){
+      toast("先按「检查答案」🙂");
+      return;
+    }
+    state.idx += 1;
+    state.picked = null;
+    state.locked = false;
+    save();
+    render();
+  }
 
-  $("btnStart").addEventListener("click", ()=>{
-    window.scrollTo({top: 0, behavior:"smooth"});
-    toast("Start: Draw → Check → Discard");
-  });
+  function renderProgressOnly(){
+    const total = state.order.length || state.roundSize;
+    $("scoreNow").textContent = String(state.score);
+    $("correctNow").textContent = String(state.correct);
+    $("wrongNow").textContent = String(state.wrong);
+    $("doneNow").textContent = String(state.idx + (state.locked ? 1 : 0));
+    $("qIndex").textContent = String(Math.min(state.idx+1, total));
+  }
 
-  $("qDraw").addEventListener("click", ()=>{
-    setAdvice("After you draw…", [
-      "If it’s a flower/season/animal: put it face-up as bonus, then draw replacement.",
-      "Check if you can win now (and whether you meet your table’s minimum tai).",
-      "If you can make a kong safely, declare it and draw replacement.",
-      "Then discard one tile."
-    ]);
-  });
-  $("qDiscard").addEventListener("click", ()=>{
-    setAdvice("When choosing a discard…", [
-      "Prefer tiles that don’t help your planned sets (or are already ‘dead’ / many seen).",
-      "Be careful discarding tiles that complete obvious chows for the player on your right (they chow from your discard).",
-      "Near endgame: play defensively—discard safer tiles (already heavily discarded)."
-    ]);
-  });
-  $("qClaim").addEventListener("click", ()=>{
-    setAdvice("When someone discards a tile…", [
-      "If it lets you win: you can usually take it and declare Mahjong.",
-      "Else: pong/kong if it speeds your hand AND doesn’t block your tai plan.",
-      "Chow only if allowed (often only from the player on your left) and it helps you reach a winnable hand."
-    ]);
-  });
-  $("qWin").addEventListener("click", ()=>{
-    setAdvice("Before you declare Mahjong…", [
-      "Confirm you have 4 sets + 1 pair (unless your table allows special hands).",
-      "Confirm you meet minimum tai (toggle 1/2 at the top if needed).",
-      "If winning on someone’s discard, check table rules for payment/shooter handling."
-    ]);
-  });
+  function escapeHtml(s){
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function buildRef(){
+    const wrap = $("refList");
+    wrap.innerHTML = "";
+    for(const t of TERMS){
+      const div = document.createElement("div");
+      div.className = "log";
+      div.innerHTML = `<b>${escapeHtml(t.zh)}</b> <span class="muted">(${escapeHtml(t.en)})</span><br>
+        ${escapeHtml(t.defZh)}<br><span class="muted">${escapeHtml(t.defEn)}</span>`;
+      wrap.appendChild(div);
+    }
+  }
+
+  function copyCheat(){
+    const lines = [];
+    lines.push("新加坡麻将术语速记卡 (SG Mahjong Terms)");
+    lines.push("");
+    for(const t of TERMS){
+      lines.push(`${t.zh} — ${t.en}`);
+      lines.push(`- ${t.defZh}`);
+      lines.push(`- ${t.defEn}`);
+      lines.push("");
+    }
+    lines.push("House rules (example):");
+    lines.push("- 臭平湖=1台，但不能单调");
+    lines.push("- 大牌（中发白）不能做眼");
+    lines.push("- 自己风/圈风不能做眼（其他风通常可）");
+    const text = lines.join("\n");
+
+    navigator.clipboard?.writeText(text).then(()=>toast("已复制速记卡 ✅")).catch(()=>toast("无法复制（此浏览器不支持）"));
+  }
+
+  // Bind
+  $("btnCheck").addEventListener("click", checkAnswer);
+  $("btnNext").addEventListener("click", nextQuestion);
+  $("btnNew").addEventListener("click", newRound);
+  $("btnReset").addEventListener("click", resetAll);
+  $("btnCopyCheat").addEventListener("click", copyCheat);
 
   // Init
-  load();
-  renderChecklist();
-  updateScore();
+  buildRef();
+  if(!load() || !state.order || !state.order.length){
+    newRound();
+  }else{
+    render();
+    toast("已恢复上次进度 ✅");
+  }
 })();
 </script>
 </body>
 </html>
+```0
