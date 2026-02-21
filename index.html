@@ -3,16 +3,21 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>Singapore Mahjong — 术语 & 牌型 Vocabulary Quiz（选择题）</title>
+  <title>Singapore Mahjong — 术语 & 牌型 Vocabulary Quiz（选择题 + 真实牌风格）</title>
   <style>
     :root{
       --bg1:#071022; --bg2:#0b1733;
       --card: rgba(255,255,255,.06);
       --line: rgba(255,255,255,.12);
       --ink:#eaf1ff; --muted:#b7c6ee;
-      --good:#2ee59d; --bad:#ff5c7a; --accent:#7aa7ff; --warn:#ffd166;
+      --good:#2ee59d; --bad:#ff5c7a; --accent:#7aa7ff;
       --shadow: 0 16px 42px rgba(0,0,0,.38);
       --r:18px;
+
+      --tileW: 46px;
+      --tileH: 62px;
+      --tileWsm: 40px;
+      --tileHsm: 54px;
     }
     *{box-sizing:border-box}
     body{
@@ -49,11 +54,13 @@
       background: rgba(255,255,255,.04);
       font-size:12px;color:var(--muted); font-weight:650;
     }
+
     .grid{
       display:grid; gap:14px; margin-top:14px;
       grid-template-columns: 1.15fr .85fr;
     }
     @media (max-width: 980px){ .grid{grid-template-columns:1fr} }
+
     .card{
       border:1px solid var(--line);
       border-radius: var(--r);
@@ -69,6 +76,7 @@
     }
     .content{padding:12px 14px 14px}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
     button{
       border:1px solid var(--line);
       background: rgba(255,255,255,.04);
@@ -88,6 +96,7 @@
     button.ghost{background: transparent}
     button.danger{border-color: rgba(255,92,122,.35)}
     button:disabled{opacity:.55;cursor:not-allowed}
+
     .k{
       display:inline-flex; gap:8px; align-items:center;
       padding:7px 10px; border-radius: 999px;
@@ -96,6 +105,7 @@
       color:var(--muted);
       font-size:12px; font-weight:650;
     }
+
     select{
       padding:10px 12px;border-radius:14px;
       border:1px solid var(--line);
@@ -112,6 +122,7 @@
     }
     .qtitle{font-size:15px;font-weight:950;margin:0 0 6px}
     .qprompt{color:var(--muted);font-size:13px;margin:0 0 10px;line-height:1.45}
+
     .hand{
       display:flex; gap:6px; flex-wrap:wrap;
       margin-top:10px;
@@ -126,22 +137,22 @@
       font-size:12px;
       margin-bottom:6px;
     }
+
+    /* Tile container (looks like real tile) */
     .tile{
-      width:44px; height:58px; border-radius:12px;
+      width: var(--tileW);
+      height: var(--tileH);
+      border-radius: 12px;
       box-shadow: 0 10px 22px rgba(0,0,0,.26);
-      border:1px solid rgba(255,255,255,.10);
       overflow:hidden;
-      background: rgba(255,255,255,.02);
-      display:grid; place-items:center;
+      background: transparent;
     }
-    .tile.tiny{width:38px;height:50px;border-radius:11px}
-    .utile{
-      width:100%;height:100%;
-      display:grid; place-items:center;
-      font-size:38px; line-height:1;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+    .tile.tiny{
+      width: var(--tileWsm);
+      height: var(--tileHsm);
+      border-radius: 11px;
     }
-    .tile.tiny .utile{font-size:32px}
+    .tile svg{display:block;width:100%;height:100%}
 
     .choices{display:grid;gap:10px;margin-top:10px}
     .choice{
@@ -232,6 +243,7 @@
     }
   </style>
 </head>
+
 <body>
 <header>
   <div class="wrap">
@@ -241,13 +253,13 @@
         <div>
           <h1>Singapore Mahjong — 术语 & 牌型 Vocabulary Quiz（选择题）</h1>
           <div class="sub">
-            目标：记牢新加坡常用术语（中文为主，附英文），并用牌图提示加强直觉。<br>
-            题库包含：平湖、臭平湖、门清、半色/混一色、清一色、碰碰胡（对对胡）、七对、单调、两面等、边张、卡张、单钓将、将牌（眼）、字牌/大牌、门风/圈风、中发白 等。
+            目标：记牢新加坡常用术语（中文为主，附英文），用“真实牌风格”的图形提示加强直觉。<br>
+            题库：平湖、臭平湖、门清、半色/混一色、清一色、碰碰胡（对对胡）、七对、单调、两面等、边张、卡张、单钓将、眼（将牌）、字牌（风/中发白）、门风/圈风 等。
           </div>
         </div>
       </div>
       <div class="row">
-        <span class="pill">离线可用 · 随机出题 · 多选题 · 即时讲解 · 牌图(Unicode)</span>
+        <span class="pill">离线可用 · 随机出题 · 即时讲解 · 牌图是 SVG（更像“真实麻将牌”）</span>
       </div>
     </div>
   </div>
@@ -315,7 +327,7 @@
             </div>
           </div>
           <div class="muted" style="margin-top:8px;line-height:1.35">
-            注：本页面训练“术语词汇与概念”。台数（tai）与 house rule（如“臭平湖 1 台但不能单调”、“大牌不能做眼”等）各桌不同，题目会以“常见新加坡玩法”给解释，但不替代你朋友桌最终规则。
+            注：本页面训练“术语词汇与概念”。台数（tai）与 house rule（如“臭平湖 1 台但不能单调”、“大牌不能做眼”等）各桌不同，本测验只做概念解释。
           </div>
         </div>
 
@@ -349,10 +361,6 @@
         <div class="row" style="margin-top:10px">
           <button class="primary" id="btnCopyCheat">复制速记卡 Copy Cheat Sheet</button>
         </div>
-
-        <div class="muted mini" style="margin-top:10px;line-height:1.35">
-          如果你看到的是“□”方块，代表当前设备/浏览器不支持麻将 Unicode 字形。建议用 Chrome / Samsung Internet 打开。
-        </div>
       </div>
     </aside>
 
@@ -368,41 +376,257 @@
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
-  const KEY = "sgmj_vocab_quiz_v1_unicode";
+  const KEY = "sgmj_vocab_quiz_svgtiles_v1";
 
-  // -----------------------------
-  // Unicode Mahjong Tiles
-  // -----------------------------
+  // =========================================================
+  // 1) SVG “Real-looking” Mahjong Tile Renderer
+  // =========================================================
   // Codes:
-  //  c1..c9 = Characters (萬) 🀇..🀏
-  //  b1..b9 = Bamboo (索) 🀐..🀘
-  //  d1..d9 = Dots (筒) 🀙..🀡
-  //  winds: we/ws/ww/wn = 🀀🀁🀂🀃 (东南西北)
-  //  dragons: dr/dg/dw = 🀄🀅🀆 (中發白)
-  function unicodeFromCode(code){
-    if(/^c[1-9]$/.test(code)) return String.fromCodePoint(0x1F007 + (parseInt(code[1],10) - 1));
-    if(/^b[1-9]$/.test(code)) return String.fromCodePoint(0x1F010 + (parseInt(code[1],10) - 1));
-    if(/^d[1-9]$/.test(code)) return String.fromCodePoint(0x1F019 + (parseInt(code[1],10) - 1));
-    if(code==="we") return String.fromCodePoint(0x1F000); // East
-    if(code==="ws") return String.fromCodePoint(0x1F001); // South
-    if(code==="ww") return String.fromCodePoint(0x1F002); // West
-    if(code==="wn") return String.fromCodePoint(0x1F003); // North
-    if(code==="dr") return String.fromCodePoint(0x1F004); // Red dragon (中)
-    if(code==="dg") return String.fromCodePoint(0x1F005); // Green dragon (發)
-    if(code==="dw") return String.fromCodePoint(0x1F006); // White dragon (白)
-    return "🀫";
+  //  c1..c9 = Characters (萬)
+  //  b1..b9 = Bamboo (索)
+  //  d1..d9 = Dots (筒)
+  //  winds: we/ws/ww/wn = 东南西北
+  //  dragons: dr/dg/dw = 中發白
+  //
+  // Goal: look like “usual tiles”: white tile, bevel, inner panel, colored symbols.
+  function esc(s){
+    return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
   }
-  function tileElFromCode(code, tiny=false){
+
+  function cnNum(n){
+    const map = ["","一","二","三","四","五","六","七","八","九"];
+    return map[n] || String(n);
+  }
+
+  function tileSVG(code){
+    const w = 100, h = 135; // internal SVG coordinate
+    const r = 18;
+
+    // Outer tile style
+    const outerFillTop = "#fbfdff";
+    const outerFillBot = "#eef2f8";
+    const edgeStroke = "rgba(0,0,0,.22)";
+
+    // Inner panel
+    const panelTop = "rgba(255,255,255,.92)";
+    const panelBot = "rgba(245,248,255,.86)";
+    const panelStroke = "rgba(0,0,0,.12)";
+
+    // Suit colors
+    const colDot = "#2b7bff";
+    const colBam = "#20c997";
+    const colChar = "#ff3b5c";
+    const colWind = "#f5c84c";
+    const colRed = "#ff3b5c";
+    const colGreen = "#20c997";
+    const colInk = "rgba(0,0,0,.72)";
+
+    // Determine kind
+    let kind = "dot", n = 1, ch = "";
+    if(/^d[1-9]$/.test(code)){ kind="dot"; n=parseInt(code[1],10); }
+    else if(/^b[1-9]$/.test(code)){ kind="bam"; n=parseInt(code[1],10); }
+    else if(/^c[1-9]$/.test(code)){ kind="char"; n=parseInt(code[1],10); }
+    else if(code==="we"){ kind="wind"; ch="東"; }
+    else if(code==="ws"){ kind="wind"; ch="南"; }
+    else if(code==="ww"){ kind="wind"; ch="西"; }
+    else if(code==="wn"){ kind="wind"; ch="北"; }
+    else if(code==="dr"){ kind="dragon"; ch="中"; }
+    else if(code==="dg"){ kind="dragon"; ch="發"; }
+    else if(code==="dw"){ kind="dragon"; ch="白"; }
+    else { kind="dot"; n=1; }
+
+    const cornerText = (() => {
+      if(kind==="dot") return `${n}筒`;
+      if(kind==="bam") return `${n}索`;
+      if(kind==="char") return `${n}萬`;
+      if(kind==="wind") return `風`;
+      if(kind==="dragon") return `龍`;
+      return "";
+    })();
+
+    const cornerColor = (() => {
+      if(kind==="dot") return "rgba(0,0,0,.58)";
+      if(kind==="bam") return "rgba(0,0,0,.58)";
+      if(kind==="char") return "rgba(0,0,0,.58)";
+      if(kind==="wind") return "rgba(0,0,0,.58)";
+      if(kind==="dragon") return "rgba(0,0,0,.58)";
+      return "rgba(0,0,0,.58)";
+    })();
+
+    // Center artwork builder
+    let center = "";
+
+    // Helper: dot circles layout
+    function dot(x,y,r,fill){ return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" />`; }
+    function ring(x,y,r,fill){
+      return `<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/><circle cx="${x}" cy="${y}" r="${r-2.2}" fill="rgba(255,255,255,.88)"/>`;
+    }
+
+    if(kind==="dot"){
+      // Typical “筒” look: rings; layout depends on n
+      const c = colDot;
+      const small = 7.4, big = 9.2;
+      const positions = {
+        1:[[50,68,"big","ring"]],
+        2:[[34,52,"small","ring"],[66,84,"small","ring"]],
+        3:[[34,52,"small","ring"],[50,68,"small","ring"],[66,84,"small","ring"]],
+        4:[[34,52,"small","ring"],[66,52,"small","ring"],[34,84,"small","ring"],[66,84,"small","ring"]],
+        5:[[34,52,"small","ring"],[66,52,"small","ring"],[50,68,"small","ring"],[34,84,"small","ring"],[66,84,"small","ring"]],
+        6:[[34,50,"small","ring"],[66,50,"small","ring"],[34,68,"small","ring"],[66,68,"small","ring"],[34,86,"small","ring"],[66,86,"small","ring"]],
+        7:[[34,48,"small","ring"],[66,48,"small","ring"],[34,66,"small","ring"],[66,66,"small","ring"],[34,84,"small","ring"],[66,84,"small","ring"],[50,68,"small","ring"]],
+        8:[[34,48,"small","ring"],[66,48,"small","ring"],[34,62,"small","ring"],[66,62,"small","ring"],[34,76,"small","ring"],[66,76,"small","ring"],[34,90,"small","ring"],[66,90,"small","ring"]],
+        9:[[34,48,"small","ring"],[50,48,"small","ring"],[66,48,"small","ring"],
+           [34,68,"small","ring"],[50,68,"small","ring"],[66,68,"small","ring"],
+           [34,88,"small","ring"],[50,88,"small","ring"],[66,88,"small","ring"]],
+      }[n] || positions[1];
+
+      center += `<g>`;
+      for(const p of positions){
+        const [x,y,size,type] = p;
+        const rr = (size==="big") ? big : small;
+        center += (type==="ring") ? ring(x,y,rr,c) : dot(x,y,rr,c);
+      }
+      center += `</g>`;
+    }
+
+    if(kind==="bam"){
+      // Typical “索”: bamboo stalks. For 1-bamboo, use a bird-ish icon.
+      if(n===1){
+        center += `
+          <g transform="translate(0,0)">
+            <path d="M58 48c10 4 12 18 2 26-7 6-18 6-26-1-10-9-6-22 2-26 7-3 14 0 16 1z"
+              fill="${colBam}" opacity=".95"/>
+            <circle cx="56" cy="58" r="3" fill="rgba(0,0,0,.65)"/>
+            <path d="M43 66c8 6 16 7 24 0" stroke="rgba(0,0,0,.30)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M40 54c-7 2-10 8-9 13 1 6 6 10 12 10"
+              stroke="${colBam}" stroke-width="4" fill="none" stroke-linecap="round" opacity=".85"/>
+          </g>`;
+      } else {
+        // Stalk count and layout
+        const cols = (n<=3) ? n : (n<=6 ? 2 : 3);
+        const rows = Math.ceil(n/cols);
+        const x0 = 28, x1 = 72;
+        const y0 = 44, y1 = 94;
+        const dx = (cols===1) ? 0 : (x1-x0)/(cols-1);
+        const dy = (rows===1) ? 0 : (y1-y0)/(rows-1);
+
+        let k=0;
+        center += `<g opacity=".96">`;
+        for(let rI=0;rI<rows;rI++){
+          for(let cI=0;cI<cols;cI++){
+            if(k>=n) break;
+            const x = x0 + cI*dx;
+            const y = y0 + rI*dy;
+            center += `
+              <g transform="translate(${x-6},${y-18})">
+                <rect x="4" y="6" width="4" height="34" rx="2" fill="${colBam}"/>
+                <rect x="1" y="16" width="10" height="5" rx="2.5" fill="${colBam}" opacity=".70"/>
+                <rect x="1" y="28" width="10" height="5" rx="2.5" fill="${colBam}" opacity=".70"/>
+              </g>`;
+            k++;
+          }
+        }
+        center += `</g>`;
+      }
+      // Add small “索” label for realism
+      center += `<text x="50" y="112" text-anchor="middle" font-size="18" font-weight="900" fill="${colBam}" opacity=".95">索</text>`;
+    }
+
+    if(kind==="char"){
+      // Typical “萬”: Chinese numeral + 萬
+      center += `
+        <text x="50" y="60" text-anchor="middle" font-size="34" font-weight="950" fill="${colChar}">${esc(cnNum(n))}</text>
+        <text x="50" y="95" text-anchor="middle" font-size="30" font-weight="950" fill="${colChar}">萬</text>
+      `;
+    }
+
+    if(kind==="wind"){
+      // Wind in gold-ish with ink outline
+      center += `
+        <text x="50" y="78" text-anchor="middle" font-size="54" font-weight="950"
+          fill="${colWind}" stroke="rgba(0,0,0,.28)" stroke-width="2">${esc(ch)}</text>
+      `;
+    }
+
+    if(kind==="dragon"){
+      if(ch==="中"){
+        center += `<text x="50" y="80" text-anchor="middle" font-size="56" font-weight="950"
+          fill="${colRed}" stroke="rgba(0,0,0,.20)" stroke-width="1.5">中</text>`;
+      } else if(ch==="發"){
+        center += `<text x="50" y="80" text-anchor="middle" font-size="56" font-weight="950"
+          fill="${colGreen}" stroke="rgba(0,0,0,.20)" stroke-width="1.5">發</text>`;
+      } else { // 白
+        // White board: white fill + dark outline
+        center += `
+          <rect x="30" y="45" width="40" height="56" rx="8" fill="rgba(255,255,255,.92)" stroke="rgba(0,0,0,.30)" stroke-width="2"/>
+          <text x="50" y="82" text-anchor="middle" font-size="36" font-weight="950"
+            fill="rgba(0,0,0,.55)">白</text>
+        `;
+      }
+    }
+
+    // Compose SVG
+    const svg = `
+<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" aria-label="${esc(code)}">
+  <defs>
+    <linearGradient id="outerG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${outerFillTop}"/>
+      <stop offset="1" stop-color="${outerFillBot}"/>
+    </linearGradient>
+
+    <linearGradient id="panelG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="${panelTop}"/>
+      <stop offset="1" stop-color="${panelBot}"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.3" flood-color="rgba(0,0,0,.30)"/>
+    </filter>
+
+    <filter id="bevel" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.1" flood-color="rgba(0,0,0,.18)"/>
+      <feDropShadow dx="0" dy="-1.2" stdDeviation="0.9" flood-color="rgba(255,255,255,.40)"/>
+    </filter>
+  </defs>
+
+  <!-- outer tile -->
+  <rect x="3" y="3" width="${w-6}" height="${h-6}" rx="${r}"
+        fill="url(#outerG)" stroke="${edgeStroke}" stroke-width="2" filter="url(#softShadow)"/>
+
+  <!-- inner bevel frame -->
+  <rect x="8" y="8" width="${w-16}" height="${h-16}" rx="${r-6}"
+        fill="rgba(255,255,255,.35)" stroke="rgba(0,0,0,.10)" stroke-width="1.5" filter="url(#bevel)"/>
+
+  <!-- inner panel -->
+  <rect x="14" y="14" width="${w-28}" height="${h-28}" rx="${r-9}"
+        fill="url(#panelG)" stroke="${panelStroke}" stroke-width="1.2"/>
+
+  <!-- corner label -->
+  <text x="20" y="34" font-size="14" font-weight="900" fill="${cornerColor}">${esc(cornerText)}</text>
+
+  <!-- tiny suit marker (bottom right) -->
+  <text x="${w-18}" y="${h-18}" text-anchor="end" font-size="12" font-weight="900" fill="rgba(0,0,0,.35)">
+    ${kind==="dot"?"筒":kind==="bam"?"索":kind==="char"?"萬":kind==="wind"?"風":"龍"}
+  </text>
+
+  <!-- center artwork -->
+  <g>
+    ${center}
+  </g>
+</svg>`;
+    return svg;
+  }
+
+  function tileEl(code, tiny=false){
     const d = document.createElement("div");
     d.className = "tile" + (tiny ? " tiny" : "");
-    d.innerHTML = `<div class="utile">${unicodeFromCode(code)}</div>`;
+    d.innerHTML = tileSVG(code);
     return d;
   }
 
-  // -----------------------------
-  // Terms & Concepts (SG style)
-  // -----------------------------
-  // We include “combinations” + “wait types” + “key vocab”
+  // =========================================================
+  // 2) Terms & Concepts (SG style)
+  // =========================================================
   const TERMS = [
     // MAIN HAND TYPES
     {
@@ -525,7 +749,7 @@
       cueTiles:["we","we"]
     },
 
-    // KEY VOCAB (often asked at SG tables)
+    // KEY VOCAB
     {
       id:"jiang",
       zh:"眼（将牌）",
@@ -540,7 +764,7 @@
       zh:"字牌（大牌）",
       en:"Honors (Big tiles)",
       defZh:"风牌（东南西北）+ 三元牌（中发白）。很多桌有“大牌不能做眼”等 house rule。",
-      defEn:"Winds + Dragons. Some tables disallow using honors as the pair (eyes).",
+      defEn:"Winds + Dragons. Some tables disallow honors as the eyes (pair).",
       cueLabel:"提示：风 + 中发白",
       cueTiles:["we","ws","ww","wn","dr","dg","dw"]
     },
@@ -558,7 +782,7 @@
       zh:"圈风（场风）",
       en:"Round wind",
       defZh:"当前圈的风（东圈/南圈/西圈/北圈）。很多规则：圈风刻子/将可能有台；有些桌限制圈风不能做眼。",
-      defEn:"The prevailing wind of the round. Often has value; sometimes restricted as eyes.",
+      defEn:"Prevailing wind of the round. Often has value; sometimes restricted as eyes.",
       cueLabel:"提示：以南圈为例",
       cueTiles:["ws","ws","ws"]
     },
@@ -576,22 +800,20 @@
   const TERM_BY_ID = Object.fromEntries(TERMS.map(t => [t.id, t]));
   function getTerm(id){ return TERM_BY_ID[id]; }
 
-  // -----------------------------
-  // Question Bank
-  // -----------------------------
-  // We mix question styles: definition -> name, name -> definition, “Which is NOT…”, etc.
+  // =========================================================
+  // 3) Question Bank
+  // =========================================================
   function mkQ({answerId, type, zh, en, cueFromTerm=true, cueTiles=null}){
     return {answerId, type, zh, en, cueFromTerm, cueTiles};
   }
 
   const QUESTIONS = [
-    // Hand types
     mkQ({answerId:"pinghu", type:"def2name",
       zh:"以下描述对应什么术语？【4 副牌 + 1 对眼，通常顺子多，没有特别牌型】",
       en:"Which term matches: 4 melds + 1 pair, usually sequence-heavy, no special pattern?"
     }),
     mkQ({answerId:"choupinghu", type:"def2name",
-      zh:"以下描述对应什么术语？【看起来是平湖，但没有花/风龙刻/半色清一色/门清等加成】",
+      zh:"以下描述对应什么术语？【平湖但没有花/风龙刻/半色清一色/门清等加成】",
       en:"Which term: Ping Hu with no scoring features (often called ‘no-tai’)?"
     }),
     mkQ({answerId:"menqing", type:"def2name",
@@ -615,36 +837,34 @@
       en:"Which term: one suit only, no honors?"
     }),
     mkQ({answerId:"pinghu_qingyise", type:"def2name",
-      zh:"以下描述对应什么术语？【清一色 + 以顺子为主（像平湖那样）】",
+      zh:"以下描述对应什么术语？【清一色 + 以顺子为主（像平湖）】",
       en:"Which term: full flush but sequence-heavy like Ping Hu?"
     }),
 
-    // Waits
     mkQ({answerId:"dandiao", type:"def2name",
       zh:"以下描述对应什么术语？【只等 1 张牌才能胡】",
       en:"Which term: only ONE tile completes your win?"
     }),
     mkQ({answerId:"liangmian", type:"def2name",
-      zh:"以下描述对应什么术语？【3-4 等 2 或 5（两张牌都能胡）】",
+      zh:"以下描述对应什么术语？【3-4 等 2 或 5】",
       en:"Which term: two-sided wait (3-4 waits 2 or 5)?"
     }),
     mkQ({answerId:"bianzhang", type:"def2name",
-      zh:"以下描述对应什么术语？【1-2 等 3 或 8-9 等 7】",
-      en:"Which term: edge wait (1-2 waits 3; 8-9 waits 7)?"
+      zh:"以下描述对应什么术语？【1-2 等 3 / 8-9 等 7】",
+      en:"Which term: edge wait?"
     }),
     mkQ({answerId:"kazhang", type:"def2name",
       zh:"以下描述对应什么术语？【2-4 等 3（等中间）】",
-      en:"Which term: closed wait (2-4 waits 3)?"
+      en:"Which term: closed wait?"
     }),
     mkQ({answerId:"dandiaojiang", type:"def2name",
       zh:"以下描述对应什么术语？【最后只差一张来组成眼（对子）】",
-      en:"Which term: pair wait (waiting to form the eyes)?"
+      en:"Which term: pair wait?"
     }),
 
-    // Vocab
     mkQ({answerId:"jiang", type:"def2name",
       zh:"以下描述对应什么术语？【胡牌里的那一对（对子）】",
-      en:"Which term: the pair in your winning hand?"
+      en:"Which term: the pair (eyes) in your winning hand?"
     }),
     mkQ({answerId:"zipai", type:"def2name",
       zh:"以下描述对应什么术语？【风牌 + 中发白】",
@@ -656,14 +876,14 @@
     }),
     mkQ({answerId:"quanfeng", type:"def2name",
       zh:"以下描述对应什么术语？【当前圈的风（场风）】",
-      en:"Which term: prevailing wind (round wind)?"
+      en:"Which term: prevailing/round wind?"
     }),
     mkQ({answerId:"sanyuan", type:"def2name",
       zh:"以下描述对应什么术语？【中发白】",
       en:"Which term: the dragons?"
     }),
 
-    // Reverse: name -> definition
+    // Reverse definition questions
     mkQ({answerId:"banse", type:"name2def",
       zh:"“半色（混一色）”的正确定义是？",
       en:"What is the correct definition of Half Flush?"
@@ -679,22 +899,20 @@
     mkQ({answerId:"dandiao", type:"name2def",
       zh:"“单调（单张等）”的正确定义是？",
       en:"What is a Single Wait?"
-    }),
-
-    // “Which is NOT ...” style
-    mkQ({answerId:"liangmian", type:"which_is_good_wait",
-      zh:"以下哪一个是“两面等”（好等）？",
-      en:"Which one is a two-sided (good) wait?"
-    }),
-    mkQ({answerId:"dandiao", type:"which_is_single_wait",
-      zh:"以下哪一个属于“单调（单张等）”？",
-      en:"Which one is a single wait?"
     })
   ];
 
-  // -----------------------------
-  // Build choices per question type
-  // -----------------------------
+  // Wait options for special questions
+  const WAIT_OPTIONS = [
+    {id:"liangmian", zh:"两面等（3-4 等 2 或 5）", en:"Two-sided wait (3-4 waits 2/5)", cue:["c3","c4"]},
+    {id:"bianzhang", zh:"边张（1-2 等 3 / 8-9 等 7）", en:"Edge wait (1-2 waits 3)", cue:["b1","b2"]},
+    {id:"kazhang", zh:"卡张（2-4 等 3）", en:"Closed wait (2-4 waits 3)", cue:["d2","d4"]},
+    {id:"dandiaojiang", zh:"单钓将（等一张做眼）", en:"Pair wait (waiting for eyes)", cue:["we","we"]}
+  ];
+
+  // =========================================================
+  // 4) Helpers
+  // =========================================================
   function shuffle(a){
     for(let i=a.length-1;i>0;i--){
       const j = Math.floor(Math.random()*(i+1));
@@ -709,15 +927,6 @@
     t.style.display = "block";
     clearTimeout(toast._tm);
     toast._tm = setTimeout(()=>{ t.style.display="none"; }, 2000);
-  }
-
-  function escapeHtml(s){
-    return String(s)
-      .replaceAll("&","&amp;")
-      .replaceAll("<","&lt;")
-      .replaceAll(">","&gt;")
-      .replaceAll('"',"&quot;")
-      .replaceAll("'","&#039;");
   }
 
   function pickN(arr, n){
@@ -744,81 +953,12 @@
     }
 
     hand.style.display = "flex";
-    // show up to 14 tiles
-    codes.slice(0, 14).forEach(code => tilesWrap.appendChild(tileElFromCode(code, true)));
+    codes.slice(0, 14).forEach(code => tilesWrap.appendChild(tileEl(code, true)));
   }
 
-  // For wait-style questions, provide small tile cues
-  const WAIT_OPTIONS = [
-    {id:"liangmian", zh:"两面等（3-4 等 2 或 5）", en:"Two-sided wait (3-4 waits 2/5)", cue:["c3","c4"]},
-    {id:"bianzhang", zh:"边张（1-2 等 3 / 8-9 等 7）", en:"Edge wait (1-2 waits 3)", cue:["b1","b2"]},
-    {id:"kazhang", zh:"卡张（2-4 等 3）", en:"Closed wait (2-4 waits 3)", cue:["d2","d4"]},
-    {id:"dandiaojiang", zh:"单钓将（等一张做眼）", en:"Pair wait (waiting for eyes)", cue:["we","we"]}
-  ];
-
-  function buildChoices(q){
-    const answer = getTerm(q.answerId);
-
-    // Default: 4 options, always include correct
-    if(q.type === "def2name"){
-      const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3);
-      const opts = shuffle([answer, ...others]).map(t => ({
-        id: t.id,
-        labelZh: t.zh,
-        labelEn: t.en,
-        extra: ""
-      }));
-      return opts;
-    }
-
-    if(q.type === "name2def"){
-      // one correct definition + 3 distractors
-      const correct = {id: q.answerId, labelZh: answer.defZh, labelEn: answer.defEn, extra: `${answer.zh} — ${answer.en}`};
-      const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3).map(t => ({
-        id: t.id,
-        labelZh: t.defZh,
-        labelEn: t.defEn,
-        extra: `${t.zh} — ${t.en}`
-      }));
-      const opts = shuffle([correct, ...others]);
-      return opts;
-    }
-
-    if(q.type === "which_is_good_wait"){
-      // correct is liangmian
-      const opts = shuffle(WAIT_OPTIONS.map(w => ({
-        id: w.id,
-        labelZh: w.zh,
-        labelEn: w.en,
-        extra: ""
-      })));
-      return opts;
-    }
-
-    if(q.type === "which_is_single_wait"){
-      // single wait umbrella: choose one of edge/closed/pair as "single wait"
-      // but in this question, the answerId is dandiao (concept). We'll offer "卡张/边张/单钓将/两面等"
-      const opts = shuffle(WAIT_OPTIONS.map(w => ({
-        id: w.id,
-        labelZh: w.zh,
-        labelEn: w.en,
-        extra: ""
-      })));
-      // We'll mark as correct any of (bianzhang/kazhang/dandiaojiang) — but since MCQ needs one correct,
-      // we turn it into: "Which ONE is a single wait (not two-sided)?" -> choose any single-wait option.
-      // To keep it single-answer, we will force answer to "卡张" by setting q._forcedCorrect.
-      // We'll do that at question generation time.
-      return opts;
-    }
-
-    // fallback
-    const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3);
-    return shuffle([answer, ...others]).map(t => ({id:t.id,labelZh:t.zh,labelEn:t.en,extra:""}));
-  }
-
-  // -----------------------------
-  // State
-  // -----------------------------
+  // =========================================================
+  // 5) State
+  // =========================================================
   const state = {
     roundSize: 20,
     order: [],
@@ -827,9 +967,7 @@
     locked: false,
     score: 0,
     correct: 0,
-    wrong: 0,
-    // for special Q where we force exact correct option among multiple plausible ones
-    forcedCorrectId: null
+    wrong: 0
   };
 
   function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
@@ -844,14 +982,47 @@
     }catch(e){ return false; }
   }
 
+  // =========================================================
+  // 6) Choice builder
+  // =========================================================
+  function buildChoices(q){
+    const answer = getTerm(q.answerId);
+
+    if(q.type === "def2name"){
+      const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3);
+      return shuffle([answer, ...others]).map(t => ({
+        id: t.id,
+        labelZh: t.zh,
+        labelEn: t.en,
+        extra: ""
+      }));
+    }
+
+    if(q.type === "name2def"){
+      const correct = {id: q.answerId, labelZh: answer.defZh, labelEn: answer.defEn, extra: `${answer.zh} — ${answer.en}`};
+      const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3).map(t => ({
+        id: t.id,
+        labelZh: t.defZh,
+        labelEn: t.defEn,
+        extra: `${t.zh} — ${t.en}`
+      }));
+      return shuffle([correct, ...others]);
+    }
+
+    // fallback
+    const others = pickN(TERMS.filter(t => t.id !== q.answerId), 3);
+    return shuffle([answer, ...others]).map(t => ({id:t.id,labelZh:t.zh,labelEn:t.en,extra:""}));
+  }
+
+  // =========================================================
+  // 7) Round
+  // =========================================================
   function newRound(){
     const count = parseInt($("selCount").value, 10) || 20;
     state.roundSize = count;
 
-    // Build an expanded pool so we can randomize each round
+    // Expanded pool: base questions + auto-generated definition->name for all terms
     const pool = [...QUESTIONS];
-
-    // Add extra randomized def2name questions for ALL TERMS (to be more "exhaustive")
     for(const t of TERMS){
       pool.push({
         answerId: t.id,
@@ -863,22 +1034,6 @@
     }
 
     shuffle(pool);
-
-    // For "which_is_single_wait" question, force one single-wait type as the correct choice each time
-    // so it's a single-answer MCQ. We'll insert a customized question.
-    const forceSingle = pickN(["bianzhang","kazhang","dandiaojiang"], 1)[0];
-    const forcedLabelZh = getTerm(forceSingle).zh;
-    const forcedLabelEn = getTerm(forceSingle).en;
-
-    const singleQ = {
-      answerId: forceSingle,
-      type: "which_is_single_wait_exact",
-      zh: `以下哪一个是“单调”的一种？（请选最符合例子的那一个）`,
-      en: `Which one is a type of single wait? (Pick the best match)`,
-      cueFromTerm: true
-    };
-    pool.unshift(singleQ);
-
     state.order = pool.slice(0, state.roundSize);
     state.idx = 0;
     state.picked = null;
@@ -886,7 +1041,6 @@
     state.score = 0;
     state.correct = 0;
     state.wrong = 0;
-    state.forcedCorrectId = null;
 
     save();
     render();
@@ -899,6 +1053,9 @@
     newRound();
   }
 
+  // =========================================================
+  // 8) Render
+  // =========================================================
   function render(){
     const total = state.order.length || state.roundSize;
     $("qTotal").textContent = String(total);
@@ -930,27 +1087,11 @@
     $("btnNext").disabled = !state.locked;
 
     $("qTitle").textContent = "选择题 Multiple Choice";
-    $("qPrompt").innerHTML = `<b>中文：</b>${escapeHtml(q.zh)}<br><b>English:</b> ${escapeHtml(q.en)}`;
+    $("qPrompt").innerHTML = `<b>中文：</b>${esc(q.zh)}<br><b>English:</b> ${esc(q.en)}`;
 
-    // cue tiles
     renderCueTiles(q);
 
-    // Build choices depending on type
-    let choices = [];
-    if(q.type === "which_is_single_wait_exact"){
-      // show wait options; correct is q.answerId (one of bianzhang/kazhang/dandiaojiang)
-      const opts = WAIT_OPTIONS.map(w => ({
-        id: w.id,
-        labelZh: w.zh,
-        labelEn: w.en,
-        extra: "",
-        cue: w.cue
-      }));
-      choices = shuffle(opts).slice(0,4); // includes liangmian also
-    } else {
-      choices = buildChoices(q);
-    }
-
+    const choices = buildChoices(q);
     const wrap = $("choices");
     wrap.innerHTML = "";
     for(const c of choices){
@@ -960,9 +1101,9 @@
       lab.innerHTML = `
         <input type="radio" name="opt" value="${c.id}" ${checked} ${state.locked ? "disabled": ""}/>
         <div>
-          <b>${escapeHtml(c.labelZh)}</b>
-          <div class="small">${escapeHtml(c.labelEn)}</div>
-          ${c.extra ? `<div class="small muted">${escapeHtml(c.extra)}</div>` : ``}
+          <b>${esc(c.labelZh)}</b>
+          <div class="small">${esc(c.labelEn)}</div>
+          ${c.extra ? `<div class="small muted">${esc(c.extra)}</div>` : ``}
         </div>
       `;
       const inp = lab.querySelector("input");
@@ -990,15 +1131,12 @@
       return;
     }
 
-    // Determine correct answer per type
-    let correctId = q.answerId;
-
+    const correctId = q.answerId;
     const pickedId = state.picked;
     const correctTerm = getTerm(correctId);
     const pickedTerm = getTerm(pickedId);
 
     const isCorrect = (pickedId === correctId);
-
     state.locked = true;
 
     const fb = $("fb");
@@ -1009,14 +1147,14 @@
       state.score += 1;
       state.correct += 1;
       fb.innerHTML = `✅ <b>答对了 Correct!</b><br>
-        <b>${escapeHtml(correctTerm.zh)}</b> — ${escapeHtml(correctTerm.en)}<br>
-        <span class="muted"><b>中文：</b>${escapeHtml(correctTerm.defZh)}<br><b>English:</b> ${escapeHtml(correctTerm.defEn)}</span>`;
+        <b>${esc(correctTerm.zh)}</b> — ${esc(correctTerm.en)}<br>
+        <span class="muted"><b>中文：</b>${esc(correctTerm.defZh)}<br><b>English:</b> ${esc(correctTerm.defEn)}</span>`;
     } else {
       state.wrong += 1;
       fb.innerHTML = `❌ <b>不对 Wrong</b><br>
-        你选：<b>${escapeHtml(pickedTerm ? pickedTerm.zh : "—")}</b> — ${escapeHtml(pickedTerm ? pickedTerm.en : "")}<br>
-        正确：<b>${escapeHtml(correctTerm.zh)}</b> — ${escapeHtml(correctTerm.en)}<br>
-        <span class="muted"><b>中文：</b>${escapeHtml(correctTerm.defZh)}<br><b>English:</b> ${escapeHtml(correctTerm.defEn)}</span>`;
+        你选：<b>${esc(pickedTerm ? pickedTerm.zh : "—")}</b> — ${esc(pickedTerm ? pickedTerm.en : "")}<br>
+        正确：<b>${esc(correctTerm.zh)}</b> — ${esc(correctTerm.en)}<br>
+        <span class="muted"><b>中文：</b>${esc(correctTerm.defZh)}<br><b>English:</b> ${esc(correctTerm.defEn)}</span>`;
     }
 
     save();
@@ -1035,9 +1173,9 @@
     render();
   }
 
-  // -----------------------------
-  // Reference Panel
-  // -----------------------------
+  // =========================================================
+  // 9) Reference panel
+  // =========================================================
   function buildRef(){
     const wrap = $("refList");
     wrap.innerHTML = "";
@@ -1045,18 +1183,17 @@
       const div = document.createElement("div");
       div.className = "term";
       div.innerHTML = `
-        <h3><span>${escapeHtml(t.zh)}</span> <span class="en">(${escapeHtml(t.en)})</span></h3>
-        <div><b>中文：</b>${escapeHtml(t.defZh)}</div>
-        <div class="muted"><b>English:</b> ${escapeHtml(t.defEn)}</div>
+        <h3><span>${esc(t.zh)}</span> <span class="en">(${esc(t.en)})</span></h3>
+        <div><b>中文：</b>${esc(t.defZh)}</div>
+        <div class="muted"><b>English:</b> ${esc(t.defEn)}</div>
       `;
       const hand = document.createElement("div");
       hand.className = "hand";
-      hand.innerHTML = `<div class="lab">${escapeHtml(t.cueLabel || "牌图提示")}</div>`;
-      (t.cueTiles || []).slice(0, 14).forEach(code => hand.appendChild(tileElFromCode(code, true)));
+      hand.innerHTML = `<div class="lab">${esc(t.cueLabel || "牌图提示")}</div>`;
+      (t.cueTiles || []).slice(0, 14).forEach(code => hand.appendChild(tileEl(code, true)));
       div.appendChild(hand);
       wrap.appendChild(div);
     }
-    wrap.parentElement.scrollTop = 0;
   }
 
   function copyCheat(){
@@ -1078,26 +1215,21 @@
     navigator.clipboard?.writeText(text).then(()=>toast("已复制速记卡 ✅")).catch(()=>toast("无法复制（此浏览器不支持）"));
   }
 
-  // -----------------------------
-  // Bind + Init
-  // -----------------------------
+  // =========================================================
+  // 10) Bind + init
+  // =========================================================
   $("btnCheck").addEventListener("click", checkAnswer);
   $("btnNext").addEventListener("click", nextQuestion);
   $("btnNew").addEventListener("click", newRound);
   $("btnReset").addEventListener("click", resetAll);
   $("btnCopyCheat").addEventListener("click", copyCheat);
-
-  $("selCount").addEventListener("change", () => {
-    // start new round with new count
-    newRound();
-  });
+  $("selCount").addEventListener("change", () => newRound());
 
   buildRef();
 
   if(!load() || !state.order || !state.order.length){
     newRound();
   } else {
-    // ensure selector matches loaded roundSize
     $("selCount").value = String(state.roundSize || 20);
     render();
     toast("已恢复上次进度 ✅");
